@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'avatar_picker.dart';
 
-class WelcomePage extends StatelessWidget {
+class WelcomePage extends StatefulWidget {
   final String name;
 
   const WelcomePage({super.key, required this.name});
+
+  @override
+  State<WelcomePage> createState() => _WelcomePageState();
+}
+
+class _WelcomePageState extends State<WelcomePage> {
+  String? selectedEmoji;
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +31,19 @@ class WelcomePage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Text(
-              'Welcome, $name!',
+              'Welcome, ${widget.name}!',
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
+            AvatarPicker(
+              onEmojiSelected: (emoji) {
+                setState(() {
+                  selectedEmoji = emoji;
+                });
+              },
+              selectedEmoji: selectedEmoji,
+            ),
+            const SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
